@@ -20,3 +20,7 @@
 - You can authenticate your dockerhub to your local in several ways, all of which include logging in some fashion. I created a public access token in dockerhub, then in my cli, i ran `docker login -u ohill26`. This would prompt me for a password which is generated when creating the PAT. Now there is an established connection.
 
 - To push an image you can tag it, then push it. In my case, I just rebuilt the original image that was called "angular-site" to "ohill26/hill-ceg3120" and ran `docker push ohill26/hill-ceg3120`. This will also generate a default tag for you.
+
+
+# Link to dockerhub:
+- https://hub.docker.com/repository/docker/ohill26/hill-ceg3120/general

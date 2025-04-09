@@ -4,7 +4,7 @@
 # How to containerize
 - Docker is the only thing we need to download to containerize. To actually create the code via angular, node.js, typescript etc. is a different problem that is not addressed here.
 
-- To run the container without building an image for it if you for some reason wanted to do this you can use a pre-existing image from dockerhub. After you have that image, you can use the `docker run` command. You will have to add additional flags to the command to specify the working directory, and mount location.
+- To run the container without building an image for it if you for some reason wanted to do this you can use a pre-existing image from dockerhub. After you have that image, you can use the `docker run` command. You will have to add additional flags to the command to specify the working directory, and mount location. In my case, I used node:18-bullseye.
 
 - The instructions that exist inside my Dockerfile include the image to use (node:18-bullseye), the working directory (where commands will get ran), the json files that configure the angular app, npm install to install all dependencies inside of the angular config (.json), all of the rest of the project files, the port to expose the site too, and ng serve to start the app and specify the host so it allows connections from anywhere.
 
@@ -24,3 +24,7 @@
 
 # Link to dockerhub:
 - https://hub.docker.com/repository/docker/ohill26/hill-ceg3120/general
+
+# Resources
+
+- I did use chatgpt ONLY to help me write the docker file. I don't remember the exact prompt I gave it, but I believe it was along the lines of "Create a dockerfile that runs my site using Node.js version 18 and Angular version 15.03.

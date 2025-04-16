@@ -28,5 +28,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: your-dockerhub-username/your-image-name:latest
+          tags: ohill26/hill-ceg3120:latest
 

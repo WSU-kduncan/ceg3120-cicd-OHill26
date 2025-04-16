@@ -28,3 +28,4 @@
 # Resources
 
 - I did use chatgpt ONLY to help me write the docker file. I don't remember the exact prompt I gave it, but I believe it was along the lines of "Create a dockerfile that runs my site using Node.js version 18 and Angular version 15.03.
+- I used ChatGPT for help building my yaml file for the work flows. I copy and pasted the requirements from the lab document for creating the workflows. From there I took their generated file and edited context and tags.

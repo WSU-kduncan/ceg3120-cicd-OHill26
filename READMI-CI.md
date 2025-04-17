@@ -25,6 +25,22 @@
 # Link to dockerhub:
 - https://hub.docker.com/repository/docker/ohill26/hill-ceg3120/general
 
+# Configuring GitHub Secrets
+- Went to settings inside of the repository -> Secrets and variables -> actions. Here, create new repository secret. Created both a dockerhub_token, this holds the passcode generated when creating a new PAT in dockerhub. Additionally, created a docker_username token that holds my dockerhub username. This will be used to set up github workflows where I can build and push images to my dockerhub using git actions (kind of).
+
+# CI with GitHub actions
+- The workflow checks out to the repo's code when something is pushed to the main branch. Then it logs in and makes a connection to my dockerhub using the secrets created above, builds a Docker image from my Dockerfile, and pushes this to the specified DockerHub repo.
+
+- The way the workflow works is it defines when to do the job (on push to main). Set what the job runs on (ubuntu-latest). Set the permissions awared to the job (read from git and write to Docker repo). The steps clones the repo into the environment, and checkouts the code (locks a copy of the code here so it can be modified). Then log into DockerHub using the secrets. Then builds and pushes the image to DockerHub (using context which locates where the Dockerfile is). Set the tag for the push (latest in our case).
+
+- Link to worflow file in github:https://github.com/WSU-kduncan/ceg3120-cicd-OHill26/blob/main/.github/workflows/owenhill-cd.yaml
+
+# How to test workflows?
+- To test if the workflow file works we can push something to the repo and check the actions list.
+
+![image description](Actions.png)
+
+
 # Resources
 
 - I did use chatgpt ONLY to help me write the docker file. I don't remember the exact prompt I gave it, but I believe it was along the lines of "Create a dockerfile that runs my site using Node.js version 18 and Angular version 15.03.

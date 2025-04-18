@@ -38,10 +38,23 @@
 # How to test workflows?
 - To test if the workflow file works we can push something to the repo and check the actions list.
 
-![image description](Actions.png)
+![image description](images/Actions.png)
 
 
+# Reflection (Part 3)
+- The goal of this project was to implement continuous integration into our workflow. Everytime something is pushed to the main branch in github (probably code change to angular project), we want the Docker image to update automatically and therefor, the DockerHub repo as well.
+
+# Tools used
+- Angular: Used for web development
+- Node.js: Used for web development
+- DockerHub: Used to store an image
+- Git: Used as a version control tool for my code base
+- ubuntu: Used as an interface tool
+- Used PAT inside of DockerHub to connect it to my Git repo and my ubuntu instance
+- GitHub actions: Used to implement continuous integration via yaml file
+![image_description](images/Diagram.png)
 # Resources
 
 - I did use chatgpt ONLY to help me write the docker file. I don't remember the exact prompt I gave it, but I believe it was along the lines of "Create a dockerfile that runs my site using Node.js version 18 and Angular version 15.03.
 - I used ChatGPT for help building my yaml file for the work flows. I copy and pasted the requirements from the lab document for creating the workflows. From there I took their generated file and edited context and tags.
+- I used lucidcharts to build my diagram.

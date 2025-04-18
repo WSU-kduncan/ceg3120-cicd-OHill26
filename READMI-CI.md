@@ -64,7 +64,7 @@
 
 ## Generating Tags
 - To see tags in the repo, it's easy, run the command: `git tag`
-- Generating a tag is just as easy, run the command: `git tag v<version number>`. Example - `git tag v3.8.1`
+- Generating a tag is just as easy, run the command: `git tag -a v<version number>`. Example - `git tag -a v3.8.1`
 - To push a tag, run the command: `git push origin <tag>`. Example - `git push origin v3.8.1`
 
 ## Semantic Versioning Container images with github actions

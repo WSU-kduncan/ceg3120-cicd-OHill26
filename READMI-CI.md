@@ -8,7 +8,7 @@
 
 - The instructions that exist inside my Dockerfile include the image to use (node:18-bullseye), the working directory (where commands will get ran), the json files that configure the angular app, npm install to install all dependencies inside of the angular config (.json), all of the rest of the project files, the port to expose the site too, and ng serve to start the app and specify the host so it allows connections from anywhere.
 
-- Now that we have our Dockerfile we can build the image. This is straight-forward, we can just use `docker build -t <image_name> .` The image name is whatever you want to call it, I called it angular-site. The "." is to specify to build it in the current directory.
+- Now that we have our Dockerfile we can build the image. This is straight-forward, we can just use `docker build -t <image_name> .` The image name is whatever you want to call it, I called it angular-site. The "." is to specify the docker location.
 
 - Now that we have an image we can run this image to start the site. I used `docker run -p 4200:4200 angular-site` This will run the site and make it accessible in port 4200.
 
@@ -23,7 +23,7 @@
 
 
 # Link to dockerhub:
-- https://hub.docker.com/repository/docker/ohill26/hill-ceg3120/general
+- https://hub.docker.com/r/ohill26/hill-ceg3120
 
 # Configuring GitHub Secrets
 - Went to settings inside of the repository -> Secrets and variables -> actions. Here, create new repository secret. Created both a dockerhub_token, this holds the passcode generated when creating a new PAT in dockerhub. Additionally, created a docker_username token that holds my dockerhub username. This will be used to set up github workflows where I can build and push images to my dockerhub using git actions (kind of).

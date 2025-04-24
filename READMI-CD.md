@@ -59,6 +59,13 @@
 
 - To test the script of couse run it with `./refresh-container.sh`. I knew it worked because after running the script, the site worked but I also checked the docker processes with `sudo docker ps` and it said the image started running a second ago, meaning it did refresh.
 
+- Link to script in GitHub: https://github.com/WSU-kduncan/ceg3120-cicd-OHill26/blob/main/refresh-container.sh
+
+## configuring webhooks listener
+- To install webhooks originally I installed golang but I didn't need this, I just needed to do `sudo apt install webhook`.
+- To verify if successful I can run any webhook command and it should be recongized if installed correctly. I ran `webhook -h`.
+
+
 # References for Project 5
 
 - For part 1, I used generative AI to make the new additions of my yaml file. The prompt I gave was my current yaml file, and I said to make these changes, then I pasted the task#2 to the prompt.

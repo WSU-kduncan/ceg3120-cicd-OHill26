@@ -112,6 +112,10 @@ Resources:
           FromPort: 9000
           ToPort: 9000
           CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 4200
+          ToPort: 4200
+          CidrIp: 0.0.0.0/0
       Tags:
         - Key: Name
           Value: HILL-cf-SecurityGroup
@@ -197,5 +201,4 @@ Resources:
             systemctl start docker
             systemctl enable docker
             docker pull ohill26/hill-ceg3120:latest
-            docker run -d -p 80:80 --name hill-app ohill26/hill-ceg3120:latest
             reboot

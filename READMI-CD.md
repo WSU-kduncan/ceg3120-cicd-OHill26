@@ -70,7 +70,19 @@
 - Logs: monitoring logs is easy, when you run the `webhooks - hooks /home/ubuntu/hooks.json -port 9000 -verbose` it automatically puts you in the logs. Anytime a request happens it will automatically pop up here.
 - Docker process views: You can use this to see the status of any containers. Use `docker ps -a`.
 
+## Configuring a payload
+- I chose github because it's super easy and I remember how to do it from class. This does mean that obviously pushing to dockerhub won't run my script.
+- The selection that causes the trigger is a push to the github repo from a user with the correct security token.
+- The json file I created handles all of this, it contains all the logic for webhooks to use the script I created.
+- The way I verified a successful payload was first by pushing something to github, but then to check I can go to webhooks in github and it will either say delivery unsuccessful, or successful. If it says unsuccesfful, it may be because the port isn't actively listening. If this is the case run the command `webhook -hooks /home/ubuntu/hooks.json -port 9000 -verbose`.
 
+## Configuring a webhook on EC2
+- The service is telling the webhook server to listen for HTTP POST requests. When the correct requests are recieved, defined in my hooks.json, it triggers my bash script to run. It is set to restart after if service fails. Logs are sent to systemd journal.
+- To enable and start webhook: Need to reload systemd to pick up any changes made to the service with `sudo systemctl daemon-reload`. To enable the service run `sudo systemctl enable webhook.service`. Once enabled, it can be started with`sudo systemctl start webhook.service`. To check if the service is running correctly, run `sudo systemctl status webhook.service`.
+- how to test: The way I tested it was having chatgpt generate a command for me to run, `curl -X POST http://<your-ec2-public-ip>:9000/hooks/refresh-container \
+  -H "Content-Type: application/json" \
+  -H "X-Hub-Signature: my-secret-token" \
+  -d '{"ref": "push"}'`. After running this, my output was as expected and was succesful
 
 # References for Project 5
 
@@ -88,3 +100,5 @@ start a new container with the freshly pulled image.```
 - [4] - Used chatgpt to help me write the definition file. I gave it many prompts and didn't record them all but the main one was ```Create a configuration file - a hook definition - for webhook to load when ran. The hook definition should:
 Trigger your bash script to run when a payload is received
 Validate that the payload came from a trusted source via a shared secret or by validating payload is from DockerHub or GitHub``` and here I then asked it several more things, mostly about setting up security tokens.
+- [5] - Used chatgpt to generate the service file contents I needed. The prompt was ```Build me a webhook service file```. I had to make several changes because the ExecStart was not correct nor the user.
+- [6] - had to ask chatgpt how to test several things. It gave me the commands to restart, enable and start the systemd and the service. Gave me the command to test the service in the last section for part 2.

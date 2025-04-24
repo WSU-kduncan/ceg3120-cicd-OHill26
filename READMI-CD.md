@@ -33,8 +33,8 @@
 - AMI Details: I switched my AMI to Ubuntu version 20.04. Previously, I used Amazon-Linux 2 for my projects but this was not fun to use.
 - InstanceType info: I switched my instance type from t2.micro to t2.medium to meet the requirements of 2 CPU Core and 4 GB RAM.
 - VolumeSize: I specified to allocate 30gb of disk space. Honestly, I'm not sure why 30 is picked. I didn't think the docker files were that large. But this is would I did because it follows the lab document.
-- SecurityGroup config: I left everything that I had previously from project 2, but I added access anywhere from and to port 9000 from anywhere.
-- SecurityGroup Justification: This is so I can have my script implement the continuous development. Port 9000 is where I have my site set up so it is where the webhook listening is implemented. Now I allowed my ec2 instance to get post requests from port 9000 so my script can run when it receives the request.
+- SecurityGroup config: I left everything that I had previously from project 2, but I added access anywhere from and to port 9000 from anywhere and port 4200 from anywhere.
+- SecurityGroup Justification: This is so I can have my script implement the continuous development. Port 9000 is where I have my site set up so it is where the webhook listening is implemented. Now I allowed my ec2 instance to get post requests from port 9000 so my script can run when it receives the request. I added the port 4200 from anywhere because this is the port my site is on and by default AWS denies access.
 
 ## Docker Setup for the instance
 - Installing Docker: To install docker on the instance, I was able to use apt instead of dnf now, but in my yaml file I was able to run `apt install -y docker.io`. The 'y' automatically answers yes to any installation questions. I also started and enabled docker and had it pull my image from DockerHub and run it.
@@ -46,8 +46,19 @@
 - DockerHub pulling: The way I pulled the image was actually in the yaml file. `docker pull ohill26/hill-ceg3120:latest`. Very simple. This is the same image I used to test if the container runs.
 - The way I can run the container from the image is after pulling the image from DockerHub, I can run the command `sudo docker run -d -p 4200:4200 --name hill-app ohill26/hill-ceg3120:latest`. The -d means to run it detached from the terminal. -p is just specifying the port.
 - Testing: For testing, I recommend running the -it flag instead of -d. When you run -it, it will leave you in the console to interact with the container. This way, you can actively run commands to send the container input for testing/debugging. -d is better for longterm deployment.
+- How to validate if the container is running from the container side: To check this, I went inside of the container console using `docker exec -it hill-app /bin/bash`. This is the same thing as running the -it flag. Once here, I ran the command `curl http://localhost:4200`. If you see html, the container is working properly (which I did)[2]. See references for this
+- Testing the container outside if host: This is a similar process to before, but I want to run the curl command outside of the docker container. Run the `curl http://localhost:4200` command outside of the container [2].
+- Testing from External System: Go into a browser and nagivate to to http://54.158.8.74:4200/. If it works and security groups are set up correctly, it will load the angular site [2].
 
-- How to validate if the container is running from the container side: To check this, I went inside of the container console using `docker exec -it hill-app /bin/bash`. This is the same thing as running the -it flag. Once here, I ran the command `curl http://localhost:4200`. If you see html, the container is working properly (which I did). See references for this
+## Scripting container refresh
+- I created this script so I can use it to actually implement continuous deployment. The idea is that when a request gets called this script will run and do the neccessary things to refresh the site. The things it does is pull the image from DockerHub, kill and remove the previous image that was running, and start the newly pulled container.
+- Pulling image: To pull the image, I wrote the code `sudo docker pull image $IMAGE_NAME`. IMAGE_NAME is a constant that is set to my image name [3].
+- Stopping image: Code is `sudo docker stop $CONTAINER_NAME 2>/dev/null` The 2>/dev/null makes it so any error messages are discarded (the null) [3].
+- Killing, removing are the same as the stopping above [3].
+- Starting: This is the same command used before in the section up above.
+
+- To test the script of couse run it with `./refresh-container.sh`. I knew it worked because after running the script, the site worked but I also checked the docker processes with `sudo docker ps` and it said the image started running a second ago, meaning it did refresh.
+
 # References for Project 5
 
 - For part 1, I used generative AI to make the new additions of my yaml file. The prompt I gave was my current yaml file, and I said to make these changes, then I pasted the task#2 to the prompt.
@@ -56,4 +67,8 @@
 validate from container side
 validate from host side
 validate from an external connection (your physical system)``` and pasted it in chatgpt.
-
+- [3] - Used ChatGpt to create my bash script. The prompt I gave it was ```Scripting Container Application Refresh
+Create a bash script on your instance that will:
+pull the image from your DockerHub repository
+kill and remove the previously running container
+start a new container with the freshly pulled image.```

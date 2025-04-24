@@ -1,0 +1,21 @@
+[
+  {
+    "id": "refresh-container",
+    "execute-command": "/home/ubuntu/refresh-container.sh",
+    "command-working-directory": "/home/ubuntu",
+    "response-message": "✅ Container refresh triggered.",
+    "trigger-rule": {
+      "match": {
+        "type": "value",
+        "value": "push",
+        "parameter": {
+          "source": "payload",
+          "name": "ref"
+        }
+      }
+    },
+    "trigger-authentication": {
+      "secret": "my-secret-token"
+    }
+  }
+]

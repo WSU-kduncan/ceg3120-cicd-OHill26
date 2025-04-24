@@ -64,6 +64,12 @@
 ## configuring webhooks listener
 - To install webhooks originally I installed golang but I didn't need this, I just needed to do `sudo apt install webhook`.
 - To verify if successful I can run any webhook command and it should be recongized if installed correctly. I ran `webhook -h`.
+- Webhooks definition summary: This is a .json file that handles when a push request is made to github. When it detects this, it calls the script file I made earlier to get the new changes and refresh the site. This does not work for push requests to DockerHub, just GitHub. So push to DockerHub first, then Github. The file contains an identifier for the hook, the command to run (the script), the working directory, a response message I defined, a trigger rule (push), anda secret for security so this only works when trusted sources push to the repo.
+- file definition verification: For this I ran the command `webhook -hooks /home/ubuntu/hooks.json -port 9000 -verbose`. You should get a particular output if it works correctly, which I did. 
+- The way I checked to see if it was recieving payloads correctly was by pushing something to github. This only worked because I setup github webhooks prior to doing this.
+- Logs: monitoring logs is easy, when you run the `webhooks - hooks /home/ubuntu/hooks.json -port 9000 -verbose` it automatically puts you in the logs. Anytime a request happens it will automatically pop up here.
+- Docker process views: You can use this to see the status of any containers. Use `docker ps -a`.
+
 
 
 # References for Project 5
@@ -79,3 +85,6 @@ Create a bash script on your instance that will:
 pull the image from your DockerHub repository
 kill and remove the previously running container
 start a new container with the freshly pulled image.```
+- [4] - Used chatgpt to help me write the definition file. I gave it many prompts and didn't record them all but the main one was ```Create a configuration file - a hook definition - for webhook to load when ran. The hook definition should:
+Trigger your bash script to run when a payload is received
+Validate that the payload came from a trusted source via a shared secret or by validating payload is from DockerHub or GitHub``` and here I then asked it several more things, mostly about setting up security tokens.

@@ -39,9 +39,21 @@
 ## Docker Setup for the instance
 - Installing Docker: To install docker on the instance, I was able to use apt instead of dnf now, but in my yaml file I was able to run `apt install -y docker.io`. The 'y' automatically answers yes to any installation questions. I also started and enabled docker and had it pull my image from DockerHub and run it.
 - Dependencies: I didn't install any dependencies like angulor or node because I pulled my image from my repo which contains everything I need to run the container.
+- Testing docker: To check if docker is installed in the instance you can run any docker command. If installed properly, your system will recognize the command. You can run `docker --version`. 
+- Testing running containers: The way I tested to see if my ec2 instance can run containers is obviously by trying to run a container. I used the command `sudo docker run -d -p 4200:4200 --name hill-app ohill26/hill-ceg3120:latest` and then to see if it worked I went to `http://http://54.158.8.74:4200/`. The Ip Address is the public IP from my instance.
 
+## Testing on EC2 instance
+- DockerHub pulling: The way I pulled the image was actually in the yaml file. `docker pull ohill26/hill-ceg3120:latest`. Very simple. This is the same image I used to test if the container runs.
+- The way I can run the container from the image is after pulling the image from DockerHub, I can run the command `sudo docker run -d -p 4200:4200 --name hill-app ohill26/hill-ceg3120:latest`. The -d means to run it detached from the terminal. -p is just specifying the port.
+- Testing: For testing, I recommend running the -it flag instead of -d. When you run -it, it will leave you in the console to interact with the container. This way, you can actively run commands to send the container input for testing/debugging. -d is better for longterm deployment.
+
+- How to validate if the container is running from the container side: To check this, I went inside of the container console using `docker exec -it hill-app /bin/bash`. This is the same thing as running the -it flag. Once here, I ran the command `curl http://localhost:4200`. If you see html, the container is working properly (which I did). See references for this
 # References for Project 5
 
 - For part 1, I used generative AI to make the new additions of my yaml file. The prompt I gave was my current yaml file, and I said to make these changes, then I pasted the task#2 to the prompt.
 - Asked ChatGPT how to test that the DockerHub Image works using the specified versions.
+- [2] - Used chatGpt for testing, I copied ```How to verify that the container is successfully serving the Angular application
+validate from container side
+validate from host side
+validate from an external connection (your physical system)``` and pasted it in chatgpt.
 

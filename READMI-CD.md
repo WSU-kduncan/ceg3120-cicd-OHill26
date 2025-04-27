@@ -84,6 +84,17 @@
   -H "X-Hub-Signature: my-secret-token" \
   -d '{"ref": "push"}'`. After running this, my output was as expected and was succesful
 
+# Project Description and diagram
+
+## Continuous deployment overview
+
+- The goal of this project was to use webhooks and github/docker to implement continuous deployment into my angular site. 
+- The tools used were gitbash for documenting, bash for creating a script, webhooks for creating a service that would receive a payload and run the script, github for integrating workflows, sneding a payload and code repo, dockerhub for pulling images, and image repo, docker for running images, AWS for hosting instance.
+
+## Diagram of continuous deployment
+- ![image_description](images/Diagram_2.png)
+ 
+
 # References for Project 5
 
 - For part 1, I used generative AI to make the new additions of my yaml file. The prompt I gave was my current yaml file, and I said to make these changes, then I pasted the task#2 to the prompt.

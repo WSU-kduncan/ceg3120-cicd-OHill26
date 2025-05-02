@@ -201,4 +201,5 @@ Resources:
             systemctl start docker
             systemctl enable docker
             docker pull ohill26/hill-ceg3120:latest
+            docker run -d --name hill-ceg3120 --restart always ohill26/hill-ceg3120:latest
             reboot

@@ -2,13 +2,8 @@
 Description=Webhook Server
 After=network.target
 
-[Service]
-User=ubuntu  
-WorkingDirectory=/home/ubuntu
+[Service]  
 ExecStart=/usr/local/bin/webhook -hooks /home/ubuntu/hooks.json -port 9000 -verbose
-Restart=on-failure
-StandardOutput=journal
-StandardError=journal
 
 [Install]
 WantedBy=multi-user.target

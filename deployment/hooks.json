@@ -3,19 +3,30 @@
     "id": "refresh-container",
     "execute-command": "/home/ubuntu/refresh-container.sh",
     "command-working-directory": "/home/ubuntu",
-    "response-message": "✅ Container refresh triggered.",
+    "response-message": "✅ GitHub push event verified and processed.",
     "trigger-rule": {
-      "match": {
-        "type": "value",
-        "value": "push",
-        "parameter": {
-          "source": "payload",
-          "name": "ref"
+      "and": [
+        {
+          "match": {
+            "type": "value",
+            "value": "refs/heads/main",
+            "parameter": {
+              "source": "payload",
+              "name": "ref"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "payload-hash-sha256",
+            "parameter": {
+              "source": "header",
+              "name": "X-Hub-Signature-256"
+            },
+            "secret": "my-secret-token"
+          }
         }
-      }
-    },
-    "trigger-authentication": {
-      "secret": "my-secret-token"
+      ]
     }
   }
 ]
